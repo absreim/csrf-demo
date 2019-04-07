@@ -1,0 +1,14 @@
+{
+  "name": "csrf-demo",
+  "version": "1.0.0",
+  "description": "simple demostration of csrf vulnerability and mitigation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brook Li",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
