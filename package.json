@@ -9,6 +9,9 @@
   "author": "Brook Li",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "memorystore": "^1.6.1",
+    "pg-promise": "^8.6.4"
   }
 }
