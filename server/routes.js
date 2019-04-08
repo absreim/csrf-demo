@@ -2,6 +2,8 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 
 const SALT_ROUNDS = 10
+const INSUFFICIENT_FUNDS = 1
+const LOCK_NAMESPACE = 1
 
 module.exports = (db) => {
 
@@ -30,11 +32,7 @@ module.exports = (db) => {
   })
   router.post('/api/auth/login', async (req, res, next) => {
     if (!(req.body.username && req.body.password)) {
-      const err = new Error(
-        'Login request received without username and/or password.'
-      )
-      err.status = 403
-      next(err)
+      res.sendStatus(400)
       return
     }
     const {username, password} = req.body
@@ -68,12 +66,7 @@ module.exports = (db) => {
   })
   router.post('/api/auth/create', async (req, res, next) => {
     if (!(req.body.username && req.body.password)) {
-      const err = new Error(
-        'Account creation request received ' +
-        'without username and/or password.'
-      )
-      err.status = 403
-      next(err)
+      res.sendStatus(400)
     }
     else {
       const {username, password} = req.body
@@ -115,6 +108,68 @@ module.exports = (db) => {
         }
         req.session.userId = userId
         res.sendStatus(204)
+      }
+    }
+  })
+  router.post('/api/account/transfer', async (req, res, next) => {
+    const senderId = req.session.userId
+    const recipientId = req.body.recipientId
+    const amount = Number(req.body.amount)
+    if (!senderId){
+      res.sendStatus(401)
+    }
+    else if (!(recipientId && amount > 0)){
+      res.sendStatus(400)
+    }
+    else {
+      try {
+        await db.tx(async t => {
+          // acquire locks in a specified order
+          // to avoid deadlocks
+          let firstLockId = senderId
+          let secondLockId = recipientId
+          if (senderId < recipientId){
+            firstLockId = recipientId
+            secondLockId = senderId
+          }
+          await t.batch([
+            t.none(
+              'SELECT pg_advisory_xact_lock($1, $2)',
+              [LOCK_NAMESPACE, firstLockId]
+            ),
+            t.none(
+              'SELECT pg_advisory_xact_lock($1, $2)',
+              [LOCK_NAMESPACE, secondLockId]
+            )
+          ])
+          const {balance} = await t.one(
+            'SELECT balance FROM accounts WHERE id = $1',
+            [senderId]
+          )
+          if (balance < amount){
+            const err = new Error()
+            err.reasonCode = INSUFFICIENT_FUNDS
+            throw err
+          }
+          await t.batch([
+            t.none(
+              'UPDATE accounts SET balance = balance - $1 WHERE id = $2',
+              [senderId]
+            ),
+            t.none(
+              'UPDATE accounts SET balance = balance + $1 WHERE id = $2',
+              [recipientId]
+            )
+          ])
+        })
+      }
+      catch (err){
+        if (err.reasonCode === INSUFFICIENT_FUNDS){
+          res.status(403).send('Insufficient funds.')
+        }
+        else {
+          next(err)
+        }
       }
     }
   })

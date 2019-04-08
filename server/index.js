@@ -27,7 +27,7 @@ app.use((err, _, res) => {
   console.log('Error encountered: ', err)
 })
 
-const init = async () => {
+const init = () => {
   const db = pgPromise({
     host: 'localhost',
     port: 5432,
