@@ -1,5 +1,5 @@
 const express = require('express')
-const pgPromise = require("pg-promise")()
+const pgPromise = require('pg-promise')()
 const expressSession = require('express-session')
 const MemoryStore = require('memorystore')(expressSession)
 
@@ -34,6 +34,7 @@ const init = () => {
     database: 'csrf-demo'
   })
   app.use(router(db))
+  app.listen(3000)
 }
 
 init()

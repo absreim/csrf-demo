@@ -14,6 +14,7 @@ CREATE TABLE "transactions" (
     "id" SERIAL PRIMARY KEY,
     "from" INTEGER REFERENCES "accounts",
     "to" INTEGER REFERENCES "accounts",
+    "type" VARCHAR NOT NULL,
     "amount" INTEGER NOT NULL
 );
 
