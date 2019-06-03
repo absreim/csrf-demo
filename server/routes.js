@@ -7,6 +7,7 @@ const UNKNOWN_RECIPIENT = 'unknown recipient'
 const LOCK_NAMESPACE = 1
 const TRANSFER_TYPE = 'transfer'
 const DEPOSIT_TYPE = 'deposit'
+const WITHDRAWAL_TYPE = 'withdrawal'
 
 module.exports = (db) => {
 
@@ -126,6 +127,7 @@ module.exports = (db) => {
     }
     else {
       try {
+        let newBalance = null
         await db.tx(async t => {
           await t.none(
             'SELECT pg_advisory_xact_lock($1, $2)',
@@ -153,6 +155,10 @@ module.exports = (db) => {
               'INSERT INTO transactions (from, to, type, amount) VALUES ' +
               '($1, $2, $3, $4)',
               [senderId, recipientId, TRANSFER_TYPE, amount]
+            ),
+            t.one(
+              'SELECT balance FROM accounts WHERE id = $1',
+              [senderId]
             )
           ])
           if (queryResults[1].rowCount !== 1){
@@ -160,7 +166,9 @@ module.exports = (db) => {
             err.reasonCode = UNKNOWN_RECIPIENT
             throw err
           }
+          newBalance = queryResults[3].balance
         })
+        res.json({balance: newBalance})
       }
       catch (err){
         if (err.reasonCode === INSUFFICIENT_FUNDS){
@@ -174,7 +182,6 @@ module.exports = (db) => {
         }
         return
       }
-      res.sendStatus(204)
     }
   })
   router.put('/api/account/deposit', async (req, res, next) => {
@@ -207,10 +214,64 @@ module.exports = (db) => {
         return
       }
     }
+    // for privacy reasons, don't return new balance amount
     res.sendStatus(204)
   })
   router.put('/api/account/withdraw', async (req, res, next) => {
-    
+    const userId = req.session.userId
+    const amount = Number(req.body.amount)
+    if (!userId){
+      res.sendStatus(401)
+    }
+    else if (!(amount > 0)){
+      res.sendStatus(400)
+    }
+    else {
+      try {
+        let newBalance = null
+        await db.tx(async t => {
+          await t.none(
+            'SELECT pg_advisory_xact_lock($1, $2)',
+            [LOCK_NAMESPACE, senderId]
+          )
+          const { balance } = await t.one(
+            'SELECT balance FROM accounts WHERE id = $1',
+            [senderId]
+          )
+          if (balance < amount){
+            const err = new Error()
+            err.reasonCode = INSUFFICIENT_FUNDS
+            throw err
+          }
+          const queryResults = await t.batch([
+            t.none(
+              'UPDATE accounts SET balance = balance - $1 WHERE id = $2',
+              [amount, userId]
+            ),
+            t.none(
+              'INSERT INTO transactions (from, to, type, amount) VALUES ' +
+              '($1, $2, $3, $4)',
+              [userId, userId, WITHDRAWAL_TYPE, amount]
+            ),
+            t.one(
+              'SELECT balance FROM accounts WHERE id = $1',
+              [userId]
+            )
+          ])
+          newBalance = queryResults[2].balance
+        })
+        res.json({balance: newBalance})
+      }
+      catch (err){
+        if (err.reasonCode === INSUFFICIENT_FUNDS){
+          res.status(403).send('Insufficient funds.')
+        }
+        else {
+          next(err)
+        }
+        return
+      }
+    }
   })
 
   return router
