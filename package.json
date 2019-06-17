@@ -4,11 +4,13 @@
   "description": "simple demostration of csrf vulnerability and mitigation",
   "main": "index.js",
   "scripts": {
+    "start": "node .\\server\\index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Brook Li",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "memorystore": "^1.6.1",

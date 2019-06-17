@@ -1,9 +1,10 @@
 const express = require('express')
-const pgPromise = require('pg-promise')()
 const expressSession = require('express-session')
 const MemoryStore = require('memorystore')(expressSession)
 
 const router = require('./routes')
+
+const PORT = 3000
 
 const app = express()
 app.use(express.urlencoded({ extended: false }))
@@ -12,7 +13,7 @@ const sessionStore = new MemoryStore({
   checkPeriod: 86400000 // prune expired entries every 24h
 })
 const session = expressSession({
-  secret: 'c0RSB4NKT0Ps3cre37',
+  secret: 'c0RSB4NKT0Ps3cre7',
   store: sessionStore,
   resave: false,
   saveUninitialized: false,
@@ -27,14 +28,5 @@ app.use((err, _, res) => {
   console.log('Error encountered: ', err)
 })
 
-const init = () => {
-  const db = pgPromise({
-    host: 'localhost',
-    port: 5432,
-    database: 'csrf-demo'
-  })
-  app.use(router(db))
-  app.listen(3000)
-}
-
-init()
+app.use('/api', router)
+app.listen(PORT, console.log(`Listening on port ${PORT}.`))
