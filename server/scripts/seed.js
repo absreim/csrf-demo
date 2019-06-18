@@ -5,6 +5,8 @@ const db = require('../db')
 const SALT_ROUNDS = 10
 
 db.tx('seed', async t => {
+  const alicePwHashPromise = bcrypt.hash('foo', SALT_ROUNDS)
+  const bobPwHashPromise = bcrypt.hash('bar', SALT_ROUNDS)
   await t.none('DROP TABLE IF EXISTS "transactions"')
   await t.none('DROP TABLE IF EXISTS "accounts"')
   await t.none(`CREATE TABLE "accounts" (
@@ -22,8 +24,9 @@ db.tx('seed', async t => {
       "amount" INTEGER NOT NULL
     )`
   )
-  const alicePwHash = await bcrypt.hash('foo', SALT_ROUNDS)
-  const bobPwHash = await bcrypt.hash('bar', SALT_ROUNDS)
+  const [alicePwHash, bobPwHash] = await Promise.all(
+    [alicePwHashPromise, bobPwHashPromise]
+  )
   await t.batch([
     t.none('INSERT INTO accounts (username, hash, balance) VALUES ($1, $2, $3)',
       ['alice', alicePwHash, 200]),

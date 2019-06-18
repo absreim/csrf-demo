@@ -95,10 +95,10 @@ router.post('/create', async (req, res, next) => {
       }
       let userId = null
       try {
-        const createdUserRow = await db.none(
-          'INSERT INTO accounts (username, hash) VALUES ($1, $2)' +
+        const createdUserRow = await db.one(
+          'INSERT INTO accounts (username, hash, balance) VALUES ($1, $2, $3)' +
           ' RETURNING id',
-          [username, hash]
+          [username, hash, 0]
         )
         userId = createdUserRow.id
       }
