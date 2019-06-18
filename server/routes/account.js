@@ -25,7 +25,7 @@ router.post('/transfer', async (req, res, next) => {
     try {
       let newBalance = null
       await db.tx(async t => {
-        await t.none(
+        await t.one(
           'SELECT pg_advisory_xact_lock($1, $2)',
           [LOCK_NAMESPACE, senderId]
         )
@@ -48,7 +48,7 @@ router.post('/transfer', async (req, res, next) => {
             [amount, recipientId]
           ),
           t.none(
-            'INSERT INTO transactions (from, to, type, amount) VALUES ' +
+            'INSERT INTO transactions ("from", "to", type, amount) VALUES ' +
             '($1, $2, $3, $4)',
             [senderId, recipientId, TRANSFER_TYPE, amount]
           ),
@@ -83,6 +83,10 @@ router.post('/transfer', async (req, res, next) => {
 
 router.put('/deposit', async (req, res, next) => {
   const userId = req.session.userId
+  let recipientId = userId
+  if (req.body.recipientId) {
+    recipientId = req.body.recipientId
+  }
   const amount = Number(req.body.amount)
   if (!userId){
     res.sendStatus(401)
@@ -96,12 +100,12 @@ router.put('/deposit', async (req, res, next) => {
         await t.batch([
           t.none(
             'UPDATE accounts SET balance = balance + $1 WHERE id = $2',
-            [amount, userId]
+            [amount, recipientId]
           ),
           t.none(
-            'INSERT INTO transactions (from, to, type, amount) VALUES ' +
+            'INSERT INTO transactions ("from", "to", type, amount) VALUES ' +
             '($1, $2, $3, $4)',
-            [userId, userId, DEPOSIT_TYPE, amount]
+            [userId, recipientId, DEPOSIT_TYPE, amount]
           )
         ])
       })
@@ -110,9 +114,9 @@ router.put('/deposit', async (req, res, next) => {
       next(err)
       return
     }
+    // for privacy reasons, don't return new balance amount
+    res.sendStatus(204)
   }
-  // for privacy reasons, don't return new balance amount
-  res.sendStatus(204)
 })
 
 router.put('/withdraw', async (req, res, next) => {
@@ -128,13 +132,13 @@ router.put('/withdraw', async (req, res, next) => {
     try {
       let newBalance = null
       await db.tx(async t => {
-        await t.none(
+        await t.one(
           'SELECT pg_advisory_xact_lock($1, $2)',
-          [LOCK_NAMESPACE, senderId]
+          [LOCK_NAMESPACE, userId]
         )
         const { balance } = await t.one(
           'SELECT balance FROM accounts WHERE id = $1',
-          [senderId]
+          [userId]
         )
         if (balance < amount){
           const err = new Error()
@@ -147,7 +151,7 @@ router.put('/withdraw', async (req, res, next) => {
             [amount, userId]
           ),
           t.none(
-            'INSERT INTO transactions (from, to, type, amount) VALUES ' +
+            'INSERT INTO transactions ("from", "to", type, amount) VALUES ' +
             '($1, $2, $3, $4)',
             [userId, userId, WITHDRAWAL_TYPE, amount]
           ),

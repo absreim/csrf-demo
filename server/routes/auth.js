@@ -57,7 +57,7 @@ router.post('/login', async (req, res, next) => {
   }
   if (compareResult){
     req.session.userId = id
-    res.sendStatus(204)
+    res.json({username})
   }
   else {
     res.sendStatus(401)
@@ -107,7 +107,7 @@ router.post('/create', async (req, res, next) => {
         return
       }
       req.session.userId = userId
-      res.sendStatus(204)
+      res.json({username})
     }
   }
 })
