@@ -22,11 +22,12 @@ const session = expressSession({
 
 app.use(session)
 
-app.use((err, _, res, next) => {
+app.use('/api', router)
+
+app.use((err, _, res, __) => {
   const status = err.status || 500
   res.sendStatus(status)
-  console.log('Error encountered: ', err)
+  console.error('Error encountered: ', err)
 })
 
-app.use('/api', router)
 app.listen(PORT, console.log(`Listening on port ${PORT}.`))

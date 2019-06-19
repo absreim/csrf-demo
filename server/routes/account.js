@@ -11,14 +11,36 @@ const WITHDRAWAL_TYPE = 'withdrawal'
 
 const router = express.Router()
 
+router.all('*', async (req, _, next) => {
+  if (req.session.userId) {
+    next()
+  }
+  else {
+    const authRequiredErr = new Error()
+    authRequiredErr.status = 401
+    next(authRequiredErr)
+  }
+})
+
+router.get('/balance', async (req, res, next) => {
+  const userId = req.session.userId
+  try {
+    const { balance } = await db.one(
+      'SELECT balance FROM accounts WHERE id = $1',
+      [userId]
+    )
+    res.json({ balance })
+  }
+  catch (err){
+    next(err)
+  }
+})
+
 router.post('/transfer', async (req, res, next) => {
   const senderId = req.session.userId
   const recipientId = req.body.recipientId
   const amount = Number(req.body.amount)
-  if (!senderId){
-    res.sendStatus(401)
-  }
-  else if (!(recipientId && amount > 0)){
+  if (!(recipientId && amount > 0)){
     res.sendStatus(400)
   }
   else {
@@ -33,7 +55,7 @@ router.post('/transfer', async (req, res, next) => {
           'SELECT balance FROM accounts WHERE id = $1',
           [senderId]
         )
-        if (balance < amount){
+        if (balance < amount) {
           const err = new Error()
           err.reasonCode = INSUFFICIENT_FUNDS
           throw err
@@ -57,7 +79,7 @@ router.post('/transfer', async (req, res, next) => {
             [senderId]
           )
         ])
-        if (queryResults[1].rowCount !== 1){
+        if (queryResults[1].rowCount !== 1) {
           const err = new Error()
           err.reasonCode = UNKNOWN_RECIPIENT
           throw err
@@ -67,10 +89,10 @@ router.post('/transfer', async (req, res, next) => {
       res.json({balance: newBalance})
     }
     catch (err){
-      if (err.reasonCode === INSUFFICIENT_FUNDS){
+      if (err.reasonCode === INSUFFICIENT_FUNDS) {
         res.status(403).send('Insufficient funds.')
       }
-      else if (err.reasonCode === UNKNOWN_RECIPIENT){
+      else if (err.reasonCode === UNKNOWN_RECIPIENT) {
         res.status(404).send('Unknown recipient.')
       }
       else {
@@ -88,10 +110,7 @@ router.put('/deposit', async (req, res, next) => {
     recipientId = req.body.recipientId
   }
   const amount = Number(req.body.amount)
-  if (!userId){
-    res.sendStatus(401)
-  }
-  else if (!(amount > 0)){
+  if (!(amount > 0)) {
     res.sendStatus(400)
   }
   else {
@@ -110,7 +129,7 @@ router.put('/deposit', async (req, res, next) => {
         ])
       })
     }
-    catch (err){
+    catch (err) {
       next(err)
       return
     }
@@ -122,10 +141,7 @@ router.put('/deposit', async (req, res, next) => {
 router.put('/withdraw', async (req, res, next) => {
   const userId = req.session.userId
   const amount = Number(req.body.amount)
-  if (!userId){
-    res.sendStatus(401)
-  }
-  else if (!(amount > 0)){
+  if (!(amount > 0)) {
     res.sendStatus(400)
   }
   else {
@@ -165,7 +181,7 @@ router.put('/withdraw', async (req, res, next) => {
       res.json({balance: newBalance})
     }
     catch (err){
-      if (err.reasonCode === INSUFFICIENT_FUNDS){
+      if (err.reasonCode === INSUFFICIENT_FUNDS) {
         res.status(403).send('Insufficient funds.')
       }
       else {

@@ -57,7 +57,7 @@ router.post('/login', async (req, res, next) => {
   }
   if (compareResult){
     req.session.userId = id
-    res.json({username})
+    res.json({ username })
   }
   else {
     res.sendStatus(401)
@@ -110,6 +110,17 @@ router.post('/create', async (req, res, next) => {
       res.json({username})
     }
   }
+})
+
+router.post('/logout', (req, res, next) => {
+  req.session.destroy( err => {
+    if (err) {
+      next(err)
+    }
+    else {
+      res.sendStatus(204)
+    }
+  })
 })
 
 module.exports = router
