@@ -5,16 +5,32 @@
   "main": "index.js",
   "scripts": {
     "start": "node .\\server\\index.js",
-    "seed": "node .\\server\\scripts\\seed.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "seed": "node .\\server\\scripts\\seed.js"
   },
   "author": "Brook Li",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "memorystore": "^1.6.1",
-    "pg-promise": "^8.6.4"
+    "pg-promise": "^8.6.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5"
   }
 }

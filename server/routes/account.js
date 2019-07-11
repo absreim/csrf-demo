@@ -11,7 +11,7 @@ const WITHDRAWAL_TYPE = 'withdrawal'
 
 const router = express.Router()
 
-router.all('*', async (req, _, next) => {
+router.all('*', (req, _, next) => {
   if (req.session.userId) {
     next()
   }
@@ -98,7 +98,6 @@ router.post('/transfer', async (req, res, next) => {
       else {
         next(err)
       }
-      return
     }
   }
 })
@@ -187,7 +186,6 @@ router.put('/withdraw', async (req, res, next) => {
       else {
         next(err)
       }
-      return
     }
   }
 })
