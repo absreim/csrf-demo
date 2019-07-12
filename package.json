@@ -1,7 +1,7 @@
 {
   "name": "csrf-demo",
   "version": "1.0.0",
-  "description": "simple demostration of csrf vulnerability and mitigation",
+  "description": "simple demonstration of csrf vulnerability and mitigation",
   "main": "index.js",
   "scripts": {
     "start": "node .\\server\\index.js",
@@ -22,9 +22,7 @@
     "react-router-dom": "^5.0.1",
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
-  },
-  "devDependencies": {
+    "redux-thunk": "^2.3.0",
     "@babel/cli": "^7.5.0",
     "@babel/core": "^7.5.4",
     "@babel/preset-env": "^7.5.4",
