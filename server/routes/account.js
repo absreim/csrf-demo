@@ -161,21 +161,18 @@ router.put('/withdraw', async (req, res, next) => {
           throw err
         }
         const queryResults = await t.batch([
-          t.none(
-            'UPDATE accounts SET balance = balance - $1 WHERE id = $2',
+          t.one(
+            'UPDATE accounts SET balance = balance - $1 WHERE id = $2 ' +
+            'RETURNING balance',
             [amount, userId]
           ),
           t.none(
             'INSERT INTO transactions ("from", "to", type, amount) VALUES ' +
             '($1, $2, $3, $4)',
             [userId, userId, WITHDRAWAL_TYPE, amount]
-          ),
-          t.one(
-            'SELECT balance FROM accounts WHERE id = $1',
-            [userId]
           )
         ])
-        newBalance = queryResults[2].balance
+        newBalance = queryResults[0].balance
       })
       res.json({balance: newBalance})
     }
