@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const expressSession = require('express-session')
 const MemoryStore = require('memorystore')(expressSession)
@@ -28,6 +29,12 @@ app.use((err, _, res, __) => {
   const status = err.status || 500
   res.sendStatus(status)
   console.error('Error encountered: ', err)
+})
+
+app.use(express.static(path.join(__dirname, '..', 'client', 'public')))
+
+app.get('*', (_, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'public', 'index.html'))
 })
 
 app.listen(PORT, console.log(`Listening on port ${PORT}.`))

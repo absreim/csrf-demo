@@ -1,13 +1,10 @@
-const isDev = process.env.NODE_ENV === 'development'
-
 module.exports = {
-  mode: isDev ? 'development' : 'production',
   entry: [
     './client/src/index.jsx'
   ],
   output: {
     path: __dirname,
-    filename: './public/bundle.js'
+    filename: './client/public/bundle.js'
   },
   resolve: {
     extensions: ['.js', '.jsx']

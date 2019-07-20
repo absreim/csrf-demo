@@ -1,12 +1,9 @@
 import React from 'react'
 
-import {Routes, Navbar} from './components'
-
 const App = () => {
   return (
     <div>
-      <Navbar />
-      <Routes />
+      Hello, World!
     </div>
   )
 }
