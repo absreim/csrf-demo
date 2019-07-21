@@ -185,9 +185,6 @@ router.put('/withdraw', async (req, res, next) => {
       }
     }
   }
-
-  // TODO: add route to get transactions
-
 })
 
 module.exports = router
