@@ -8,7 +8,7 @@ import Account from './account'
 const App = () => {
   return (
     <div>
-      <h1>CORS Bank</h1>
+      <header>CORS Bank</header>
       <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />

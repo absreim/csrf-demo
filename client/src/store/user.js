@@ -62,7 +62,7 @@ export const signup = (username, password) => async dispatch => {
   }
 }
 
-const initialState = {}
+const initialState = null
 
 export default function(state = initialState, action) {
   switch (action.type) {
