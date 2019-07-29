@@ -1,11 +1,14 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 
-import getBalance from '../../store/account'
+import {getBalance} from '../../store/account'
+import AccountActionSwitcher from './account-action-switcher'
 
 class UnconnectedAccount extends Component{
   componentDidMount(){
-    this.props.getBalance()
+    if (this.props.user){
+      this.props.getBalance()
+    }
   }
   render(){
     return (
@@ -18,6 +21,7 @@ class UnconnectedAccount extends Component{
           </Fragment> :
           <p>You must be logged in to view your balance.</p>
         }
+        <AccountActionSwitcher />
       </main>
     )
   }

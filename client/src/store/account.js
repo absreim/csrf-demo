@@ -31,7 +31,7 @@ export const getBalance = () => async dispatch => {
     dispatch(gotBalance(data.balance))
   }
   catch (err){
-    dispatch(gotError(err))``
+    dispatch(gotError(err))
   }
 }
 

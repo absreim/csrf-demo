@@ -19,6 +19,7 @@ class UnconnectedAccountDeposit extends Component {
       this.handleRecipientIdChange.bind(this)
     this.handleAmountChange =
       this.handleAmountChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleSelectSelfRecipient(){
     this.setState({
@@ -55,8 +56,11 @@ class UnconnectedAccountDeposit extends Component {
     const {recipientId, recipientIsSelf, amount} = this.state
     if (user){
       if (recipientIsSelf) {
-        selfRecipientInput =
-          <input type="radio" name="recipient" id="self-recipient" checked />
+        selfRecipientInput = (
+          <input
+            type="radio" name="recipient" id="self-recipient" checked={true}
+          />
+        )
         otherRecipientInput = (
           <input
             type="radio" name="recipient" id="other-recipient"
@@ -71,15 +75,24 @@ class UnconnectedAccountDeposit extends Component {
             onClick={this.handleSelectSelfRecipient}
           />
         )
-        otherRecipientInput =
-          <input type="radio" name="recipient" id="other-recipient" checked />
+        otherRecipientInput = (
+          <input
+            type="radio" name="recipient" id="other-recipient" checked={true}
+          />
+        )
       }
     }
     else {
-      selfRecipientInput =
-        <input type="radio" name="recipient" id="self-recipient" disabled />
-      otherRecipientInput =
-        <input type="radio" name="recipient" id="other-recipient" checked />
+      selfRecipientInput = (
+        <input
+          type="radio" name="recipient" id="self-recipient" disabled={true}
+        />
+      )
+      otherRecipientInput = (
+        <input
+          type="radio" name="recipient" id="other-recipient" checked={true}
+        />
+      )
     }
 
     let recipientSpecifierInputArea = null

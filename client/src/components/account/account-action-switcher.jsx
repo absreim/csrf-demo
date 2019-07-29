@@ -19,7 +19,7 @@ class UnconnectedAccountActionSwitcher extends Component {
     this.navigateTransfer = this.navigateTransfer.bind(this)
   }
   navigateDeposit(){
-    if (this.state.selectedAction !== DEPOSIT){
+    if (this.state.selectedAction === DEPOSIT){
       this.setState({selectedAction: NONE})
     }
     else {
@@ -27,7 +27,7 @@ class UnconnectedAccountActionSwitcher extends Component {
     }
   }
   navigateWithdraw(){
-    if (this.state.selectedAction !== WITHDRAW){
+    if (this.state.selectedAction === WITHDRAW){
       this.setState({selectedAction: WITHDRAW})
     }
     else {
@@ -35,7 +35,7 @@ class UnconnectedAccountActionSwitcher extends Component {
     }
   }
   navigateTransfer(){
-    if (this.state.selectedAction !== TRANSFER){
+    if (this.state.selectedAction === TRANSFER){
       this.setState({selectedAction: TRANSFER})
     }
     else {
@@ -78,7 +78,7 @@ const mapStateToProps = state => ({
   user: state.user.user
 })
 
-const AccountActionSwitcher = 
+const AccountActionSwitcher =
   connect(mapStateToProps)(UnconnectedAccountActionSwitcher)
 
 export default AccountActionSwitcher
