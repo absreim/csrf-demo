@@ -26,14 +26,13 @@ class UnconnectedLogin extends Component{
   render(){
 
     let errorArea = null
-    if (this.state.validationError){
-      errorArea = <p className="signup-form-error">Passwords must match.</p>
-    }
-    else {
-      const ajaxError = this.props.error
-      if (ajaxError){
-        errorArea = <p className="signup-form-error">{ajaxError.message}</p>
+    const errorObj = this.props.error
+    if (errorObj){
+      let errorMessage = errorObj.message
+      if (errorObj.response.status === 401){
+        errorMessage = 'Invalid username and/or password.'
       }
+      errorArea = <p className="signup-form-error">{errorMessage}</p>
     }
 
     const {user} = this.props

@@ -37,13 +37,17 @@ router.post('/login', async (req, res, next) => {
   const {username, password} = req.body
   let userRow = null
   try {
-    userRow = await db.one(
+    userRow = await db.oneOrNone(
       'SELECT id, hash FROM accounts WHERE username = $1',
       [username]
     )
   }
   catch (err) {
     next(err)
+    return
+  }
+  if (!userRow){
+    res.sendStatus(401)
     return
   }
   const {id, hash} = userRow
