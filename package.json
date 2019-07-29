@@ -4,9 +4,12 @@
   "description": "simple demonstration of csrf vulnerability and mitigation",
   "main": "index.js",
   "scripts": {
-    "start-win": "npx webpack -p && set NODE_ENV=production && node .\\server\\index.js",
-    "start-dev-win": "npx webpack -d && set NODE_ENV=development && node .\\server\\index.js",
-    "seed-win": "node .\\server\\scripts\\seed.js"
+    "start": "npx webpack -p && env NODE_ENV=production node server/index.js",
+    "start-dev": "npx webpack -d && env NODE_ENV=development node server/index.js",
+    "seed": "node server/scripts/seed.js",
+    "start-win": "npx webpack -p && set NODE_ENV=production && node server\\index.js",
+    "start-dev-win": "npx webpack -d && set NODE_ENV=development && node server\\index.js",
+    "seed-win": "node server\\scripts\\seed.js"
   },
   "author": "Brook Li",
   "license": "ISC",

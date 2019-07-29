@@ -31,7 +31,7 @@ export const getBalance = () => async dispatch => {
     dispatch(gotBalance(data.balance))
   }
   catch (err){
-    dispatch(gotError(err))
+    dispatch(gotError(err))``
   }
 }
 
@@ -81,7 +81,7 @@ const initialState = {
 }
 
 export default function(state = initialState, action){
-  switch(action.type){
+  switch (action.type){
     case GOT_BALANCE:
       return {...state, balance: action.balance}
     case GOT_ERROR:

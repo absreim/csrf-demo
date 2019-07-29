@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 
 import {signup} from '../../store/user'
@@ -20,7 +20,7 @@ class UnconnectedSignup extends Component {
       [event.target.name]: event.target.value
     })
   }
-  handleSubmit(){
+  handleSubmit(event){
     const {username, password, confirm} = this.state
     if (password === confirm){
       this.setState({validationError: false})
@@ -29,6 +29,7 @@ class UnconnectedSignup extends Component {
     else {
       this.setState({validationError: true})
     }
+    event.preventDefault()
   }
   render(){
 
@@ -55,21 +56,21 @@ class UnconnectedSignup extends Component {
           </Fragment> :
           <Fragment>
             <form onSubmit={this.handleSubmit}>
+              <label htmlFor="username">Username</label>
               <input
                 name="username" type="text" value={this.state.username}
                 onChange={this.handleInputChange}
               />
-              <label htmlFor="username">Username</label>
+              <label htmlFor="password">Password</label>
               <input
                 name="password" type="password" value={this.state.password}
                 onChange={this.handleInputChange}
               />
-              <label htmlFor="password">Password</label>
+              <label htmlFor="confirm">Confirm Password</label>
               <input
                 name="confirm" type="password" value={this.state.confirm}
                 onChange={this.handleInputChange}
               />
-              <label htmlFor="confirm">Confirm Password</label>
               <input type="submit" />
             </form>
             {errorArea}

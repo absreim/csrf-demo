@@ -48,9 +48,11 @@ class UnconnectedAuthWidget extends Component {
       switch (this.state.activeSection){
         case LOGIN:
           expandedAreaBody = <Login dismissForm={this.dismissForm} />
+          break
         case SIGNUP:
           expandedAreaBody = <Signup dismissForm={this.dismissForm} />
-        default:
+          break
+        default: {
           const {user} = this.props
           expandedAreaBody = (
             <div className="auth-widget-menu-body">
@@ -71,6 +73,7 @@ class UnconnectedAuthWidget extends Component {
               }
             </div>
           )
+        }
       }
       let expandedAreaAddtlButtons = null
       if (this.state.activeSection !== MAINMENU){

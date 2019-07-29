@@ -1,11 +1,16 @@
 import React from 'react'
 import {withRouter, Link} from 'react-router-dom'
 
+import AuthWidget from './auth/auth-widget'
+
 const Navbar = () => (
-  <div>
-    <Link to="/">Home</Link>
-    <Link to="/account">Account</Link>
-  </div>
+  <nav>
+    <div>
+      <Link to="/">Home</Link>
+      <Link to="/account">Account</Link>
+    </div>
+    <AuthWidget />
+  </nav>
 )
 
 export default withRouter(Navbar)

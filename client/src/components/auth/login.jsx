@@ -18,9 +18,10 @@ class UnconnectedLogin extends Component{
       [event.target.name]: event.target.value
     })
   }
-  handleSubmit(){
+  handleSubmit(event){
     const {username, password} = this.state
     this.props.login(username, password)
+    event.preventDefault()
   }
   render(){
 
@@ -36,7 +37,7 @@ class UnconnectedLogin extends Component{
     }
 
     const {user} = this.props
-    
+
     return (
       <div>
         {
@@ -47,16 +48,16 @@ class UnconnectedLogin extends Component{
           </Fragment> :
           <Fragment>
             <form onSubmit={this.handleSubmit}>
+              <label htmlFor="username">Username</label>
               <input
                 name="username" type="text" value={this.state.username}
                 onChange={this.handleInputChange}
               />
-              <label htmlFor="username">Username</label>
+              <label htmlFor="password">Password</label>
               <input
                 name="password" type="password" value={this.state.password}
                 onChange={this.handleInputChange}
               />
-              <label htmlFor="password">Password</label>
               <input type="submit" />
             </form>
             {errorArea}
