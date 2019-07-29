@@ -18,7 +18,7 @@ const gotError = error => (
   }
 )
 
-const clearError = () => (
+export const clearError = () => (
   {
     type: CLEAR_ERROR
   }
@@ -74,8 +74,6 @@ export const withdraw = amount => async dispatch => {
     dispatch(gotError(err))
   }
 }
-
-// TODO: add transaction history in state and thunk to get transactions
 
 const initialState = {
   balance: null,

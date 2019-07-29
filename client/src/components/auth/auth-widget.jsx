@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 
 import Login from './login'
+import Signup from './signup'
 import {logout} from '../../store/user'
 
 const MAINMENU = 'MAINMENU'
@@ -47,6 +48,8 @@ class UnconnectedAuthWidget extends Component {
       switch (this.state.activeSection){
         case LOGIN:
           expandedAreaBody = <Login dismissForm={this.dismissForm} />
+        case SIGNUP:
+          expandedAreaBody = <Signup dismissForm={this.dismissForm} />
         default:
           const {user} = this.props
           expandedAreaBody = (
@@ -55,7 +58,7 @@ class UnconnectedAuthWidget extends Component {
                 user ?
                 (
                   <Fragment>
-                    <p>Logged in as:&nbsp;{user}</p>
+                    <p>Logged in as:&nbsp;{user.username}</p>
                     <button type="button" onClick={this.props.logout}>Logout</button>
                   </Fragment>
                 ) :
@@ -95,7 +98,7 @@ class UnconnectedAuthWidget extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user.user
 })
 
 const mapDispatchToProps = dispatch => ({

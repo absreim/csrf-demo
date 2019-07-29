@@ -1,14 +1,16 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import {login} from '../../store/user'
+import {signup} from '../../store/user'
 
-class UnconnectedLogin extends Component{
+class UnconnectedSignup extends Component {
   constructor(props){
     super(props)
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      confirm: '',
+      validationError: false
     }
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -19,8 +21,14 @@ class UnconnectedLogin extends Component{
     })
   }
   handleSubmit(){
-    const {username, password} = this.state
-    this.props.login(username, password)
+    const {username, password, confirm} = this.state
+    if (password === confirm){
+      this.setState({validationError: false})
+      this.props.signup(username, password)
+    }
+    else {
+      this.setState({validationError: true})
+    }
   }
   render(){
 
@@ -36,7 +44,7 @@ class UnconnectedLogin extends Component{
     }
 
     const {user} = this.props
-    
+
     return (
       <div>
         {
@@ -57,6 +65,11 @@ class UnconnectedLogin extends Component{
                 onChange={this.handleInputChange}
               />
               <label htmlFor="password">Password</label>
+              <input
+                name="confirm" type="password" value={this.state.confirm}
+                onChange={this.handleInputChange}
+              />
+              <label htmlFor="confirm">Confirm Password</label>
               <input type="submit" />
             </form>
             {errorArea}
@@ -73,9 +86,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  login: (username, password) => dispatch(login(username, password))
+  signup: (username, password) => dispatch(signup(username, password))
 })
 
-const Login = connect(mapStateToProps, mapDispatchToProps)(UnconnectedLogin)
+const Signup = connect(mapStateToProps, mapDispatchToProps)(UnconnectedSignup)
 
-export default Login
+export default Signup

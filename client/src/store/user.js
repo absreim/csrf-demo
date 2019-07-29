@@ -2,6 +2,8 @@ import axios from 'axios'
 
 const GOT_USER = 'GOT_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const GOT_ERROR = 'GOT_ERROR'
+const CLEAR_ERROR = 'CLEAR_ERROR'
 
 const gotUser = user => {
   return {
@@ -16,28 +18,44 @@ const removeUser = () => {
   }
 }
 
+const gotError = error => (
+  {
+    type: GOT_ERROR,
+    error
+  }
+)
+
+export const clearError = () => (
+  {
+    type: CLEAR_ERROR
+  }
+)
+
 export const me = () => async dispatch => {
   try {
+    dispatch(clearError())
     const {data} = await axios.get('/api/auth/status')
     dispatch(gotUser(data))
   }
   catch (err) {
-    console.error(err)
+    dispatch(gotError(err))
   }
 }
 
 export const logout = () => async dispatch => {
   try {
+    dispatch(clearError())
     await axios.post('/api/auth/logout')
     dispatch(removeUser())
   }
   catch (err) {
-    console.error(err)
+    dispatch(gotError(err))
   }
 }
 
 export const login = (username, password) => async dispatch => {
   try {
+    dispatch(clearError())
     const {data} = await axios.post('/api/auth/login', {
       username,
       password
@@ -45,12 +63,13 @@ export const login = (username, password) => async dispatch => {
     dispatch(gotUser(data))
   }
   catch (err) {
-    console.error(err)
+    dispatch(gotError(err))
   }
 }
 
 export const signup = (username, password) => async dispatch => {
   try {
+    dispatch(clearError())
     const {data} = await axios.post('/api/auth/create', {
       username,
       password
@@ -58,18 +77,25 @@ export const signup = (username, password) => async dispatch => {
     dispatch(gotUser(data))
   }
   catch (err) {
-    console.error(err)
+    dispatch(gotError(err))
   }
 }
 
-const initialState = null
+const initialState = {
+  user: null,
+  error: null
+}
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case GOT_USER:
-      return action.user
+      return {...state, user: action.user}
     case REMOVE_USER:
-      return initialState
+      return {...state, user: null}
+    case GOT_ERROR:
+      return {...state, error: action.error}
+    case CLEAR_ERROR:
+      return {...state, error: null}
     default:
       return state
   }
