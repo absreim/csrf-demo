@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom'
 
 import Navbar from './navbar'
 import Home from './home'
-import Account from './account'
+import Account from './account/account'
 
 const App = () => {
   return (

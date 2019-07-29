@@ -52,10 +52,13 @@ export const transfer = (recipientId, amount) => async dispatch => {
 export const deposit = (recipientId, amount) => async dispatch => {
   try {
     dispatch(clearError())
-    await axios.put('/api/account/deposit', {
-      recipientId,
+    const bodyValues = {
       amount
-    })
+    }
+    if (recipientId){
+      bodyValues.recipientId = recipientId
+    }
+    await axios.put('/api/account/deposit', bodyValues)
   }
   catch (err){
     dispatch(gotError(err))
