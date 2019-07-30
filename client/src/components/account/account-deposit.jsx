@@ -11,25 +11,25 @@ class UnconnectedAccountDeposit extends Component {
       recipientId: '',
       amount: 0
     }
-    this.handleSelectOtherRecipient =
-      this.handleSelectOtherRecipient.bind(this)
-    this.handleSelectSelfRecipient =
-      this.handleSelectSelfRecipient.bind(this)
+    this.handleRadioGroupChange =
+      this.handleRadioGroupChange.bind(this)
     this.handleRecipientIdChange =
       this.handleRecipientIdChange.bind(this)
     this.handleAmountChange =
       this.handleAmountChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleSelectSelfRecipient(){
-    this.setState({
-      recipientIsSelf: true
-    })
-  }
-  handleSelectOtherRecipient(){
-    this.setState({
-      recipientIsSelf: false
-    })
+  handleRadioGroupChange(event){
+    if (this.state.recipientIsSelf && event.target.value === 'other'){
+      this.setState({
+        recipientIsSelf: false
+      })
+    }
+    else if (!this.state.recipientIsSelf && event.target.value === 'self'){
+      this.setState({
+        recipientIsSelf: true
+      })
+    }
   }
   handleRecipientIdChange(event){
     this.setState({
@@ -50,50 +50,8 @@ class UnconnectedAccountDeposit extends Component {
     event.preventDefault()
   }
   render(){
-    let selfRecipientInput = null
-    let otherRecipientInput = null
     const {user} = this.props
     const {recipientId, recipientIsSelf, amount} = this.state
-    if (user){
-      if (recipientIsSelf) {
-        selfRecipientInput = (
-          <input
-            type="radio" name="recipient" id="self-recipient" checked={true}
-          />
-        )
-        otherRecipientInput = (
-          <input
-            type="radio" name="recipient" id="other-recipient"
-            onClick={this.handleSelectOtherRecipient}
-          />
-        )
-      }
-      else {
-        selfRecipientInput = (
-          <input
-            type="radio" name="recipient" id="self-recipient"
-            onClick={this.handleSelectSelfRecipient}
-          />
-        )
-        otherRecipientInput = (
-          <input
-            type="radio" name="recipient" id="other-recipient" checked={true}
-          />
-        )
-      }
-    }
-    else {
-      selfRecipientInput = (
-        <input
-          type="radio" name="recipient" id="self-recipient" disabled={true}
-        />
-      )
-      otherRecipientInput = (
-        <input
-          type="radio" name="recipient" id="other-recipient" checked={true}
-        />
-      )
-    }
 
     let recipientSpecifierInputArea = null
     if (!(user && recipientIsSelf)) {
@@ -110,9 +68,19 @@ class UnconnectedAccountDeposit extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
-        {selfRecipientInput}
+        <input
+          type="radio" name="recipient" value="self"
+          id="self-recipient"
+          checked={user && recipientIsSelf} disabled={!user}
+          onChange={this.handleRadioGroupChange}
+        />
         <label htmlFor="self-recipient">Self</label>
-        {otherRecipientInput}
+        <input
+          type="radio" name="recipient" value="other"
+          id="other-recipient"
+          checked={!user || !recipientIsSelf}
+          onChange={this.handleRadioGroupChange}
+        />
         <label htmlFor="other-recipient">Other</label>
         {recipientSpecifierInputArea}
         <label htmlFor="amount">Amount</label>

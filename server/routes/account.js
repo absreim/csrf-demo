@@ -11,6 +11,53 @@ const WITHDRAWAL_TYPE = 'withdrawal'
 
 const router = express.Router()
 
+router.put('/deposit', async (req, res, next) => {
+  if (!req.session.userId && !req.body.recipientId){
+    const errorMessage =
+      'Either you must be logged in or a recipient must be specified ' +
+      'to make a deposit.'
+    res.status(400).send(errorMessage)
+    return
+  }
+  const userId = req.session.userId
+  let recipientId = userId
+  if (req.body.recipientId) {
+    recipientId = req.body.recipientId
+  }
+  const amount = Number(req.body.amount)
+  if (!(amount > 0)) {
+    res.sendStatus(400)
+  }
+  else {
+    try {
+      await db.tx(async t => {
+        await t.batch([
+          t.none(
+            'UPDATE accounts SET balance = balance + $1 WHERE id = $2',
+            [amount, recipientId]
+          ),
+          t.none(
+            'INSERT INTO transactions ("from", "to", type, amount) VALUES ' +
+            '($1, $2, $3, $4)',
+            [userId, recipientId, DEPOSIT_TYPE, amount]
+          )
+        ])
+      })
+    }
+    catch (err) {
+      if (err.data && err.data[1] && err.data[1].result.code === '23503'){
+        res.status(404).send('Recipient does not exist.')
+      }
+      else {
+        next(err)
+      }
+      return
+    }
+    // for privacy reasons, don't return new balance amount
+    res.sendStatus(204)
+  }
+})
+
 router.all('*', (req, _, next) => {
   if (req.session.userId) {
     next()
@@ -99,41 +146,6 @@ router.post('/transfer', async (req, res, next) => {
         next(err)
       }
     }
-  }
-})
-
-router.put('/deposit', async (req, res, next) => {
-  const userId = req.session.userId
-  let recipientId = userId
-  if (req.body.recipientId) {
-    recipientId = req.body.recipientId
-  }
-  const amount = Number(req.body.amount)
-  if (!(amount > 0)) {
-    res.sendStatus(400)
-  }
-  else {
-    try {
-      await db.tx(async t => {
-        await t.batch([
-          t.none(
-            'UPDATE accounts SET balance = balance + $1 WHERE id = $2',
-            [amount, recipientId]
-          ),
-          t.none(
-            'INSERT INTO transactions ("from", "to", type, amount) VALUES ' +
-            '($1, $2, $3, $4)',
-            [userId, recipientId, DEPOSIT_TYPE, amount]
-          )
-        ])
-      })
-    }
-    catch (err) {
-      next(err)
-      return
-    }
-    // for privacy reasons, don't return new balance amount
-    res.sendStatus(204)
   }
 })
 
