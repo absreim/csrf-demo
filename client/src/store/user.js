@@ -35,7 +35,12 @@ export const me = () => async dispatch => {
   try {
     dispatch(clearError())
     const {data} = await axios.get('/api/auth/status')
-    dispatch(gotUser(data))
+    if (data.username){
+      dispatch(gotUser(data))
+    }
+    else {
+      dispatch(removeUser())
+    }
   }
   catch (err) {
     dispatch(gotError(err))

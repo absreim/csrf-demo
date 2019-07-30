@@ -70,8 +70,8 @@ class UnconnectedAccountDeposit extends Component {
       <form onSubmit={this.handleSubmit}>
         <input
           type="radio" name="recipient" value="self"
-          id="self-recipient"
-          checked={user && recipientIsSelf} disabled={!user}
+          id="self-recipient" disabled={!user}
+          checked={Boolean(user && recipientIsSelf)}
           onChange={this.handleRadioGroupChange}
         />
         <label htmlFor="self-recipient">Self</label>

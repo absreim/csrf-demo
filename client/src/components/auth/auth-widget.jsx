@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import Login from './login'
 import Signup from './signup'
-import {logout} from '../../store/user'
+import {logout, me} from '../../store/user'
 
 const MAINMENU = 'MAINMENU'
 const LOGIN = 'LOGIN'
@@ -20,6 +20,9 @@ class UnconnectedAuthWidget extends Component {
     this.navigateLogin = this.navigateLogin.bind(this)
     this.navigateSignUp = this.navigateSignUp.bind(this)
     this.dismissForm = this.dismissForm.bind(this)
+  }
+  componentDidMount(){
+    this.props.me()
   }
   toggleMenu(){
     this.setState(state => ({
@@ -105,7 +108,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(logout())
+  logout: () => dispatch(logout()),
+  me: () => dispatch(me())
 })
 
 const AuthWidget = connect(mapStateToProps, mapDispatchToProps)(UnconnectedAuthWidget)
