@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 
 import AccountDeposit from './account-deposit'
 import AccountTransfer from './account-transfer'
+import AccountWithdraw from './account-withdraw'
 
 const NONE = 'NONE'
 const DEPOSIT = 'DEPOSIT'
@@ -61,6 +62,9 @@ class UnconnectedAccountActionSwitcher extends Component {
         break
       case TRANSFER:
         actionFormArea = <AccountTransfer />
+        break
+      case WITHDRAW:
+        actionFormArea = <AccountWithdraw />
         break
       default:
         actionFormArea = <p>Select an action above.</p>
