@@ -1,5 +1,9 @@
 import React from 'react'
 
-export default () => (
-  <h2>Welcome to CORS Bank!</h2>
+const Home = () => (
+  <main>
+    <h1>Welcome to CORS Bank!</h1>
+  </main>
 )
+
+export default Home
