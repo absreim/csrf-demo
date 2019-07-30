@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 
 import AccountDeposit from './account-deposit'
+import AccountTransfer from './account-transfer'
 
 const NONE = 'NONE'
 const DEPOSIT = 'DEPOSIT'
@@ -28,18 +29,18 @@ class UnconnectedAccountActionSwitcher extends Component {
   }
   navigateWithdraw(){
     if (this.state.selectedAction === WITHDRAW){
-      this.setState({selectedAction: WITHDRAW})
+      this.setState({selectedAction: NONE})
     }
     else {
-      this.setState({selectedAction: NONE})
+      this.setState({selectedAction: WITHDRAW})
     }
   }
   navigateTransfer(){
     if (this.state.selectedAction === TRANSFER){
-      this.setState({selectedAction: TRANSFER})
+      this.setState({selectedAction: NONE})
     }
     else {
-      this.setState({selectedAction: NONE})
+      this.setState({selectedAction: TRANSFER})
     }
   }
   render(){
@@ -57,6 +58,9 @@ class UnconnectedAccountActionSwitcher extends Component {
     switch (this.state.selectedAction){
       case DEPOSIT:
         actionFormArea = <AccountDeposit />
+        break
+      case TRANSFER:
+        actionFormArea = <AccountTransfer />
         break
       default:
         actionFormArea = <p>Select an action above.</p>

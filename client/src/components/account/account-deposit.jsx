@@ -9,7 +9,7 @@ class UnconnectedAccountDeposit extends Component {
     this.state = {
       recipientIsSelf: true,
       recipientId: '',
-      amount: 0
+      amount: ''
     }
     this.handleRadioGroupChange =
       this.handleRadioGroupChange.bind(this)
