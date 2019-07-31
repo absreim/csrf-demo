@@ -24,6 +24,7 @@ class UnconnectedAccount extends Component{
   render(){
     return (
       <main>
+        <h1 className="main-title">Account Actions</h1>
         {
           this.props.user ?
           <Fragment>

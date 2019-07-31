@@ -29,9 +29,13 @@ main {
   padding-right: 1em;
 }
 
-.main-nav-links > a {
+.main-nav-links__link {
   color: lightgreen;
   text-decoration: none;
+}
+
+.main-nav-links__link--selected {
+  color: beige;
 }
 
 .main-nav-links > a:hover, .main-nav-links > a:active,
@@ -39,12 +43,8 @@ main {
   color: white;
 }
 
-.main-nav-links__link--selected {
-  color: beige;
-}
-
-.home-title {
-  color: darkgreen;
+.main-title {
+  color: green;
 }
 
 .auth-widget-dropdown {

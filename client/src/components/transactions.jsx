@@ -24,7 +24,7 @@ class UnconnectedTransactions extends Component{
     const {user, transactions} = this.props
     return (
       <main>
-        <h1>Transaction History</h1>
+        <h1 className="main-title">Transaction History</h1>
         {
           user ?
           (
