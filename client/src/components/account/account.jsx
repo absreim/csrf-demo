@@ -1,13 +1,24 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 
-import {getBalance} from '../../store/account'
+import {getBalance, clearBalance} from '../../store/account'
 import AccountActionSwitcher from './account-action-switcher'
 
 class UnconnectedAccount extends Component{
   componentDidMount(){
     if (this.props.user){
       this.props.getBalance()
+    }
+    else {
+      this.props.clearBalance()
+    }
+  }
+  componentDidUpdate(prevProps){
+    if (!prevProps.user && this.props.user){
+      this.props.getBalance()
+    }
+    else if (prevProps.user && !this.props.user){
+      this.props.clearBalance()
     }
   }
   render(){
@@ -33,7 +44,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getBalance: () => dispatch(getBalance())
+  getBalance: () => dispatch(getBalance()),
+  clearBalance: () => dispatch(clearBalance())
 })
 
 const Account = connect(mapStateToProps, mapDispatchToProps)(UnconnectedAccount)

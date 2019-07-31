@@ -1,12 +1,23 @@
 import React, {Component, Fragment} from 'react'
 import {connect} from 'react-redux'
 
-import {getTransactions} from '../store/transactions'
+import {getTransactions, clearTransactions} from '../store/transactions'
 
 class UnconnectedTransactions extends Component{
   componentDidMount(){
     if (this.props.user){
       this.props.getTransactions()
+    }
+    else {
+      this.props.clearTransactions()
+    }
+  }
+  componentDidUpdate(prevProps){
+    if (!prevProps.user && this.props.user){
+      this.props.getTransactions()
+    }
+    else if (prevProps.user && !this.props.user) {
+      this.props.clearTransactions()
     }
   }
   render(){
@@ -70,7 +81,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getTransactions: () => dispatch(getTransactions())
+  getTransactions: () => dispatch(getTransactions()),
+  clearTransactions: () => dispatch(clearTransactions())
 })
 
 const Transactions =

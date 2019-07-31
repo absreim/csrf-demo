@@ -3,6 +3,7 @@ import axios from 'axios'
 const GOT_BALANCE = 'GOT_BALANCE'
 const GOT_ERROR = 'GOT_ERROR'
 const CLEAR_ERROR = 'CLEAR_ERROR'
+const CLEAR_BALANCE = 'CLEAR_BALANCE'
 
 const gotBalance = balance => (
   {
@@ -23,6 +24,10 @@ export const clearError = () => (
     type: CLEAR_ERROR
   }
 )
+
+export const clearBalance = () => ({
+  type: CLEAR_BALANCE
+})
 
 export const getBalance = () => async dispatch => {
   try {
@@ -58,7 +63,10 @@ export const deposit = (recipientId, amount) => async dispatch => {
     if (recipientId){
       bodyValues.recipientId = recipientId
     }
-    await axios.put('/api/account/deposit', bodyValues)
+    const {data} = await axios.put('/api/account/deposit', bodyValues)
+    if (data.balance !== null && data.balance !== undefined){
+      dispatch(gotBalance(data.balance))
+    }
   }
   catch (err){
     dispatch(gotError(err))
@@ -91,6 +99,8 @@ export default function(state = initialState, action){
       return {...state, error: action.error}
     case CLEAR_ERROR:
       return {...state, error: null}
+    case CLEAR_BALANCE:
+      return {...state, balance: null}
     default:
       return state
   }

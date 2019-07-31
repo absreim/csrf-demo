@@ -3,6 +3,7 @@ import axios from 'axios'
 const GOT_TRANSACTIONS = 'GOT_TRANSACTIONS'
 const GOT_ERROR = 'GOT_ERROR'
 const CLEAR_ERROR = 'CLEAR_ERROR'
+const CLEAR_TRANSACTIONS = 'CLEAR_TRANSACTIONS'
 
 const gotTransactions = transactions => ({
   type: GOT_TRANSACTIONS,
@@ -16,6 +17,10 @@ const gotError = err => ({
 
 const clearError = () => ({
   type: CLEAR_ERROR
+})
+
+export const clearTransactions = () => ({
+  type: CLEAR_TRANSACTIONS
 })
 
 export const getTransactions = () => async dispatch => {
@@ -42,6 +47,8 @@ export default function(state = initialState, action){
       return {...state, error: action.error}
     case CLEAR_ERROR:
       return {...state, error: null}
+    case CLEAR_TRANSACTIONS:
+      return {...state, transactions: null}
     default:
       return state
   }

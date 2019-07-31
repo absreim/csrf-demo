@@ -29,11 +29,13 @@ router.put('/deposit', async (req, res, next) => {
     res.sendStatus(400)
   }
   else {
+    let balance = null
     try {
       await db.tx(async t => {
-        await t.batch([
-          t.none(
-            'UPDATE accounts SET balance = balance + $1 WHERE id = $2',
+        const results = await t.batch([
+          t.one(
+            'UPDATE accounts SET balance = balance + $1 WHERE id = $2 ' +
+            'RETURNING balance',
             [amount, recipientId]
           ),
           t.none(
@@ -42,6 +44,7 @@ router.put('/deposit', async (req, res, next) => {
             [userId, recipientId, DEPOSIT_TYPE, amount]
           )
         ])
+        balance = results[0].balance
       })
     }
     catch (err) {
@@ -53,8 +56,12 @@ router.put('/deposit', async (req, res, next) => {
       }
       return
     }
-    // for privacy reasons, don't return new balance amount
-    res.sendStatus(204)
+    if (recipientId === userId){
+      res.json({balance})
+    }
+    else {
+      res.sendStatus(204)
+    }
   }
 })
 
