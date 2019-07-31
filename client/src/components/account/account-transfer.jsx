@@ -31,7 +31,7 @@ class UnconnectedAccountTransfer extends Component {
   }
   render(){
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="account-form">
         <label htmlFor="recipient-id">Recipient Id</label>
         <input
           type="number" id="recipient-id" name="recipient-id"

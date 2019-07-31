@@ -23,7 +23,7 @@ class UnconnectedAccountWithdraw extends Component{
   }
   render(){
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="account-form">
         <label htmlFor="amount">Amount</label>
         <input
           type="number" id="amount" name="amount"

@@ -1,5 +1,76 @@
-nav {
+body {
+  font-family: sans-serif;
+  margin: 0;
+}
+
+main {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.main-header {
+  color: white;
+  font-size: larger;
+  margin-bottom: 0.5em;
+}
+
+.nav-header-container {
+  background-color: darkgreen;
+  padding: 0.5em;
+}
+
+.main-nav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.main-nav-links > :not(:last-child) {
+  padding-right: 1em;
+}
+
+.main-nav-links > a {
+  color: lightgreen;
+  text-decoration: none;
+}
+
+.main-nav-links > a:hover, .main-nav-links > a:active,
+.main-nav-links > a:focus {
+  color: white;
+}
+
+.main-nav-links__link--selected {
+  color: beige;
+}
+
+.home-title {
+  color: darkgreen;
+}
+
+.auth-widget-dropdown {
+  position: absolute;
+  right: 0.5em;
+}
+
+.auth-widget-nav {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-form {
+  margin-top: 0.25em;
+  display: flex;
+  flex-direction: column;
+  max-width: 10em;
+}
+
+.radio-group {
+  border: solid;
+  display: flex;
+  flex-direction: column;
 }

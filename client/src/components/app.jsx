@@ -9,8 +9,10 @@ import Transactions from './transactions'
 const App = () => {
   return (
     <div>
-      <header>CORS Bank</header>
-      <Navbar />
+      <div className="nav-header-container">
+        <header className="main-header">CORS Bank</header>
+        <Navbar />
+      </div>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/account" component={Account} />

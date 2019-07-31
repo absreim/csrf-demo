@@ -17,6 +17,7 @@ class UnconnectedAuthWidget extends Component {
       activeSection: MAINMENU
     }
     this.toggleMenu = this.toggleMenu.bind(this)
+    this.navigateMain = this.navigateMain.bind(this)
     this.navigateLogin = this.navigateLogin.bind(this)
     this.navigateSignUp = this.navigateSignUp.bind(this)
     this.dismissForm = this.dismissForm.bind(this)
@@ -58,7 +59,7 @@ class UnconnectedAuthWidget extends Component {
         default: {
           const {user} = this.props
           expandedAreaBody = (
-            <div className="auth-widget-menu-body">
+            <div>
               {
                 user ?
                 (
@@ -85,11 +86,11 @@ class UnconnectedAuthWidget extends Component {
         )
       }
       expandedArea = (
-        <div>
-          <div className="auth-widget-menu-nav">
+        <div className="auth-widget-dropdown">
+          <nav className="auth-widget-nav">
             {expandedAreaAddtlButtons}
             <button type="button" onClick={this.dismissForm}>Close</button>
-          </div>
+          </nav>
           {expandedAreaBody}
         </div>
       )

@@ -55,7 +55,7 @@ class UnconnectedSignup extends Component {
             <button type="button" onClick={this.props.dismissForm}>OK</button>
           </Fragment> :
           <Fragment>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} className="auth-form">
               <label htmlFor="username">Username</label>
               <input
                 name="username" type="text" value={this.state.username}
