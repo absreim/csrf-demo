@@ -8,6 +8,7 @@ const Navbar = () => (
     <div>
       <Link to="/">Home</Link>
       <Link to="/account">Account</Link>
+      <Link to="/transactions">Transactions</Link>
     </div>
     <AuthWidget />
   </nav>

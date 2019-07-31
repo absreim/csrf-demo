@@ -21,7 +21,7 @@ const clearError = () => ({
 export const getTransactions = () => async dispatch => {
   try {
     dispatch(clearError())
-    const {data} = axios.get('/api/transactions')
+    const {data} = await axios.get('/api/transactions')
     dispatch(gotTransactions(data))
   }
   catch (err){
@@ -37,7 +37,7 @@ const initialState = {
 export default function(state = initialState, action){
   switch (action.type){
     case GOT_TRANSACTIONS:
-      return {...state, transctions: action.transctions}
+      return {...state, transactions: action.transactions}
     case GOT_ERROR:
       return {...state, error: action.error}
     case CLEAR_ERROR:

@@ -4,6 +4,7 @@ import {Switch, Route} from 'react-router-dom'
 import Navbar from './navbar'
 import Home from './home'
 import Account from './account/account'
+import Transactions from './transactions'
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/account" component={Account} />
+        <Route exact path="/transactions" component={Transactions} />
       </Switch>
     </div>
   )

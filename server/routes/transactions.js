@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
   let rows = null
   try {
     rows = await db.any(
-      'SELECT "from", "to", type, amount FROM transactions ' +
+      'SELECT id, "from", "to", type, amount FROM transactions ' +
       'WHERE "from" = $1 OR "to" = $1 ORDER BY id DESC',
       [userId]
     )
@@ -25,4 +25,4 @@ router.get('/', async (req, res, next) => {
   res.json(rows)
 })
 
-export default router
+module.exports = router
