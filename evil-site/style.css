@@ -1,3 +1,7 @@
 .evil-form > input {
   display: none;
 }
+
+section {
+  border: solid;
+}
