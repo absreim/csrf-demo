@@ -2,14 +2,18 @@ const path = require('path')
 const express = require('express')
 const expressSession = require('express-session')
 const MemoryStore = require('memorystore')(expressSession)
+const cookieParser = require('cookie-parser')
+const csurf = require('csurf')
 
 const router = require('./routes')
+const secured = require('./routes/secured')
 
 const PORT = 3000
 
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
 
 const sessionStore = new MemoryStore({
   checkPeriod: 86400000 // prune expired entries every 24h
@@ -23,8 +27,10 @@ const session = expressSession({
 })
 
 app.use(session)
-
 app.use('/api', router)
+
+app.use(csurf({ cookie: true }))
+app.use('/secured', secured)
 
 app.use((err, _, res, __) => {
   const status = err.status || 500

@@ -90,7 +90,7 @@ router.get('/balance', async (req, res, next) => {
   }
 })
 
-router.post('/transfer', async (req, res, next) => {
+const transferHandler = async (req, res, next) => {
   const senderId = req.session.userId
   const recipientId = req.body.recipientId
   const amount = Number(req.body.amount)
@@ -154,7 +154,9 @@ router.post('/transfer', async (req, res, next) => {
       }
     }
   }
-})
+}
+
+router.post('/transfer', transferHandler)
 
 router.put('/withdraw', async (req, res, next) => {
   const userId = req.session.userId
@@ -206,4 +208,7 @@ router.put('/withdraw', async (req, res, next) => {
   }
 })
 
-module.exports = router
+module.exports = {
+  router,
+  transferHandler
+}
