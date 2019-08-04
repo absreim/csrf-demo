@@ -27,8 +27,7 @@ const session = expressSession({
   secret: process.env.SECRET || 'c0RSB4NKT0Ps3cre7',
   store: sessionStore,
   resave: false,
-  saveUninitialized: false,
-  cookie: { domain: 'localhost' }
+  saveUninitialized: false
 })
 
 app.use(session)
