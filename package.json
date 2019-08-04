@@ -8,6 +8,8 @@
     "start-dev": "npx webpack -d && env NODE_ENV=development node server/index.js",
     "seed": "node server/scripts/seed.js",
     "start-evil": "npx http-server evil-site",
+    "build": "npx webpack -p",
+    "start-server": "env NODE_ENV=production node server/index.js",
     "start-win": "npx webpack -p && set NODE_ENV=production && node server\\index.js",
     "start-dev-win": "npx webpack -d && set NODE_ENV=development && node server\\index.js",
     "seed-win": "node server\\scripts\\seed.js"
