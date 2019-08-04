@@ -24,7 +24,7 @@ const sessionStore = new MemoryStore({
   checkPeriod: 86400000 // prune expired entries every 24h
 })
 const session = expressSession({
-  secret: 'c0RSB4NKT0Ps3cre7',
+  secret: process.env.SECRET || 'c0RSB4NKT0Ps3cre7',
   store: sessionStore,
   resave: false,
   saveUninitialized: false,
