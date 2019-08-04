@@ -11,6 +11,11 @@ const secured = require('./routes/secured')
 const PORT = process.env.PORT || 3000
 
 const app = express()
+
+if (process.env.PROXY){
+  app.set('trust proxy', true)
+}
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
