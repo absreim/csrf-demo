@@ -1,3 +1,5 @@
+DOMAIN = 'http://localhost:3000'
+
 function postCallWithCreds(url){
   const paramsString = 'recipientId=2&amount=1'
   const requestObj = new Request(url)
@@ -16,12 +18,12 @@ function postCallWithCreds(url){
 
 document.getElementById('ajax-button').addEventListener(
   'click',
-  () => postCallWithCreds('http://localhost:3000/api/account/transfer')
+  () => postCallWithCreds(`${DOMAIN}/api/account/transfer`)
 )
 
 document.getElementById('secured-ajax-button').addEventListener(
   'click',
-  () => postCallWithCreds('http://localhost:3000/secured/account/transfer')
+  () => postCallWithCreds(`${DOMAIN}/secured/account/transfer`)
 )
 
 function jsonPostCallWithCreds(url){
@@ -46,5 +48,5 @@ function jsonPostCallWithCreds(url){
 
 document.getElementById('json-ajax-button').addEventListener(
   'click',
-  () => jsonPostCallWithCreds('http://localhost:3000/api/account/transfer')
+  () => jsonPostCallWithCreds(`${DOMAIN}/api/account/transfer`)
 )

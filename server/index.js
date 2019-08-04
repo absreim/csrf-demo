@@ -45,8 +45,10 @@ app.use((err, _, res, __) => {
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'public')))
 
-app.get('*', (_, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'public', 'index.html'))
-})
+if (!process.env.HEADLESS){
+  app.get('*', (_, res) => {
+    res.sendFile(path.join(__dirname, '..', 'client', 'public', 'index.html'))
+  })
+}
 
 app.listen(PORT, console.log(`Listening on port ${PORT}.`))
