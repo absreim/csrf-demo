@@ -16,28 +16,36 @@
     </p>
     <section>
       <header>Form Submission</header>
-      <p>Should work again an unsecured endpoint.</p>
+      <p>Should work against an unsecured endpoint.</p>
       <form 
         class="evil-form"
         action="http://localhost:3000/api/account/transfer"
         method="post"
       >
         <input type="number" name="recipientId" value="2">
-        <input type="number" name="amount" value="100">
+        <input type="number" name="amount" value="1">
         <button type="submit">Click Here!</button>
       </form>
     </section>
     <section>
-      <header>AJAX Call</header>
+      <header>AJAX Call with URL Encoding</header>
       <p>Same-Origin policy should prevent the output from being read,
         but the action of transferring the money still takes place.</p>
       <button type="button" id="ajax-button">Click Here!</button>
     </section>
     <section>
-      <header>AJAX Call Against CSRF Token-Secured Endpoint</header>
+      <header>AJAX Call with URL Encoding Against CSRF Token-Secured Endpoint</header>
       <p>CSRF token middleware should prevent this request from being
         executed.</p>
       <button type="button" id="secured-ajax-button">Click Here!</button>
+    </section>
+    <section>
+      <header>AJAX Call with JSON Body</header>
+      <p>Same-Origin policy should prevent the should prevent the request
+        from going through at all, even though it is against an unsecured
+        endpoint.
+      </p>
+      <button type="button" id="json-ajax-button">Click Here!</button>
     </section>
     <script src="ajax-call.js"></script>
   </body>

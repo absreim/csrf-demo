@@ -1,10 +1,12 @@
 function postCallWithCreds(url){
   const paramsString = 'recipientId=2&amount=1'
-  const paramsObj = new URLSearchParams(paramsString)
   const requestObj = new Request(url)
   const initObj = {
     method: 'POST',
-    body: paramsObj,
+    body: paramsString,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
     credentials: 'include'
   }
   fetch(requestObj, initObj).then(response => {
@@ -20,4 +22,29 @@ document.getElementById('ajax-button').addEventListener(
 document.getElementById('secured-ajax-button').addEventListener(
   'click',
   () => postCallWithCreds('http://localhost:3000/secured/account/transfer')
+)
+
+function jsonPostCallWithCreds(url){
+  const paramsObj = {
+    recipientId: 2,
+    amount: 1
+  }
+  const paramsString = JSON.stringify(paramsObj)
+  const requestObj = new Request(url)
+  const initObj = {
+    method: 'POST',
+    body: paramsString,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include'
+  }
+  fetch(requestObj, initObj).then(response => {
+    console.log(response)
+  })
+}
+
+document.getElementById('json-ajax-button').addEventListener(
+  'click',
+  () => jsonPostCallWithCreds('http://localhost:3000/api/account/transfer')
 )
