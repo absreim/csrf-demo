@@ -34,18 +34,18 @@
       <button type="button" id="ajax-button">Click Here!</button>
     </section>
     <section>
-      <header>AJAX Call with URL Encoding Against CSRF Token-Secured Endpoint</header>
-      <p>CSRF token middleware should prevent this request from being
-        executed.</p>
-      <button type="button" id="secured-ajax-button">Click Here!</button>
-    </section>
-    <section>
       <header>AJAX Call with JSON Body</header>
       <p>Same-Origin policy should prevent the should prevent the request
         from going through at all, even though it is against an unsecured
         endpoint.
       </p>
       <button type="button" id="json-ajax-button">Click Here!</button>
+    </section>
+    <section>
+      <header>AJAX Call with URL Encoding Against CSRF Token-Secured Endpoint</header>
+      <p>CSRF token middleware should prevent this request from being
+        executed.</p>
+      <button type="button" id="secured-ajax-button">Click Here!</button>
     </section>
     <script src="ajax-call.js"></script>
   </body>
