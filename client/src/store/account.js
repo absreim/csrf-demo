@@ -43,7 +43,7 @@ export const getBalance = () => async dispatch => {
 export const transfer = (recipientId, amount) => async dispatch => {
   try {
     dispatch(clearError())
-    const {data} = await axios.post('/api/account/transfer', {
+    const {data} = await axios.post('/secured/account/transfer', {
       recipientId,
       amount
     })

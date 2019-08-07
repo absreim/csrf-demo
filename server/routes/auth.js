@@ -9,6 +9,7 @@ const router = express.Router()
 
 router.get('/status', async (req, res, next) => {
   const userId = req.session.userId
+  res.cookie('XSRF-TOKEN', req.csrfToken())
   if (userId){
     let username = null
     try {

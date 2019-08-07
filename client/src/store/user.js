@@ -34,7 +34,7 @@ export const clearError = () => (
 export const me = () => async dispatch => {
   try {
     dispatch(clearError())
-    const {data} = await axios.get('/api/auth/status')
+    const {data} = await axios.get('/auth/status')
     if (data.username){
       dispatch(gotUser(data))
     }
@@ -50,7 +50,7 @@ export const me = () => async dispatch => {
 export const logout = () => async dispatch => {
   try {
     dispatch(clearError())
-    await axios.post('/api/auth/logout')
+    await axios.post('/auth/logout')
     dispatch(removeUser())
   }
   catch (err) {
@@ -61,7 +61,7 @@ export const logout = () => async dispatch => {
 export const login = (username, password) => async dispatch => {
   try {
     dispatch(clearError())
-    const {data} = await axios.post('/api/auth/login', {
+    const {data} = await axios.post('/auth/login', {
       username,
       password
     })
@@ -75,7 +75,7 @@ export const login = (username, password) => async dispatch => {
 export const signup = (username, password) => async dispatch => {
   try {
     dispatch(clearError())
-    const {data} = await axios.post('/api/auth/create', {
+    const {data} = await axios.post('/auth/create', {
       username,
       password
     })
