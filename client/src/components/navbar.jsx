@@ -1,8 +1,6 @@
 import React from 'react'
 import {withRouter, NavLink} from 'react-router-dom'
 
-import AuthWidget from './auth/auth-widget'
-
 const Navbar = () => (
   <nav className="main-nav">
     <div className="main-nav-links">
@@ -28,7 +26,6 @@ const Navbar = () => (
         Transactions
       </NavLink>
     </div>
-    <AuthWidget />
   </nav>
 )
 

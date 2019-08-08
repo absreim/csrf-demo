@@ -14,9 +14,12 @@ main {
   margin-bottom: 0.5em;
 }
 
-.nav-header-container {
+.nav-header-auth-container {
+  display: flex;
+  flex-direction: row;
   background-color: darkgreen;
   padding: 0.5em;
+  justify-content: space-between;
 }
 
 .main-nav {
@@ -73,4 +76,27 @@ main {
   border: solid;
   display: flex;
   flex-direction: column;
+}
+
+.auth-widget-icon {
+  border: solid;
+  border-color: lightgreen;
+  width: 3em;
+  height: 3em;
+}
+
+.auth-widget-icon:hover {
+  border-color: white;
+}
+
+.auth-widget-icon__figure {
+  stroke: green;
+}
+
+.auth-widget-icon__figure--hollow {
+  fill: white;
+}
+
+.auth-widget-icon__figure--filled {
+  fill: green;
 }

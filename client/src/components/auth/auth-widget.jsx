@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 
 import Login from './login'
 import Signup from './signup'
+import AuthWidgetIcon from './auth-widget-icon'
 import {logout, me} from '../../store/user'
 
 const MAINMENU = 'MAINMENU'
@@ -47,6 +48,7 @@ class UnconnectedAuthWidget extends Component {
   }
   render(){
     let expandedArea = null
+    const {user} = this.props
     if (this.state.menuExpanded){
       let expandedAreaBody = null
       switch (this.state.activeSection){
@@ -57,7 +59,6 @@ class UnconnectedAuthWidget extends Component {
           expandedAreaBody = <Signup dismissForm={this.dismissForm} />
           break
         default: {
-          const {user} = this.props
           expandedAreaBody = (
             <div>
               {
@@ -95,9 +96,16 @@ class UnconnectedAuthWidget extends Component {
         </div>
       )
     }
+    let iconFigureClass = 'auth-widget-icon__figure '
+    iconFigureClass += user ?
+      'auth-widget-icon__figure--filled' :
+      'auth-widget-icon__figure--hollow'
     return (
       <div>
-        <button type="button" onClick={this.toggleMenu}>Auth</button>
+        <AuthWidgetIcon
+          outerClass="auth-widget-icon" headClass={iconFigureClass}
+          bodyClass={iconFigureClass} clickHandler={this.toggleMenu}
+        />
         {expandedArea}
       </div>
     )

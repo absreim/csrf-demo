@@ -5,13 +5,17 @@ import Navbar from './navbar'
 import Home from './home'
 import Account from './account/account'
 import Transactions from './transactions'
+import AuthWidget from './auth/auth-widget'
 
 const App = () => {
   return (
     <div>
-      <div className="nav-header-container">
-        <header className="main-header">CORS Bank</header>
-        <Navbar />
+      <div className="nav-header-auth-container">
+        <div>
+          <header className="main-header">CORS Bank</header>
+          <Navbar />
+        </div>
+        <AuthWidget />
       </div>
       <Switch>
         <Route exact path="/" component={Home} />
