@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import Login from './login'
 import Signup from './signup'
 import AuthWidgetIcon from './auth-widget-icon'
+import CloseIcon from './close-icon'
 import {logout, me} from '../../store/user'
 
 const MAINMENU = 'MAINMENU'
@@ -90,7 +91,15 @@ class UnconnectedAuthWidget extends Component {
         <div className="auth-widget-dropdown">
           <nav className="auth-widget-nav">
             {expandedAreaAddtlButtons}
-            <button type="button" onClick={this.dismissForm}>Close</button>
+            <button
+              type="button" onClick={this.dismissForm}
+              className="close-button"
+            >
+              <CloseIcon
+                viewBox="-2 -2 40 40" outerClass="close-button-icon"
+                lineClass="close-button-icon-lines"
+              />
+            </button>
           </nav>
           {expandedAreaBody}
         </div>
@@ -102,10 +111,15 @@ class UnconnectedAuthWidget extends Component {
       'auth-widget-icon__figure--hollow'
     return (
       <div>
-        <AuthWidgetIcon
-          outerClass="auth-widget-icon" headClass={iconFigureClass}
-          bodyClass={iconFigureClass} clickHandler={this.toggleMenu}
-        />
+        <button
+          type="button" className="auth-widget-icon-button"
+          onClick={this.toggleMenu}
+        >
+          <AuthWidgetIcon
+            outerClass="auth-widget-icon" headClass={iconFigureClass}
+            bodyClass={iconFigureClass} viewBox="-2 -2 76 76"
+          />
+        </button>
         {expandedArea}
       </div>
     )

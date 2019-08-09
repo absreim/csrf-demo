@@ -78,19 +78,25 @@ main {
   flex-direction: column;
 }
 
-.auth-widget-icon {
+.auth-widget-icon-button {
   border: solid;
   border-color: lightgreen;
-  width: 3em;
-  height: 3em;
+  padding: 0;
 }
 
-.auth-widget-icon:hover {
+.auth-widget-icon-button:hover {
   border-color: white;
+}
+
+.auth-widget-icon {
+  width: 3em;
+  height: 3em;
+  display: block;
 }
 
 .auth-widget-icon__figure {
   stroke: green;
+  stroke-width: 4px;
 }
 
 .auth-widget-icon__figure--hollow {
@@ -99,4 +105,20 @@ main {
 
 .auth-widget-icon__figure--filled {
   fill: green;
+}
+
+.close-button {
+  padding: 0;
+  border: none;
+}
+
+.close-button-icon {
+  width: 1.5em;
+  height: 1.5em;
+  display: block;
+}
+
+.close-button-icon-lines {
+  stroke: red;
+  stroke-width: 4px;
 }
