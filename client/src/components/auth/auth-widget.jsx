@@ -5,6 +5,7 @@ import Login from './login'
 import Signup from './signup'
 import AuthWidgetIcon from './auth-widget-icon'
 import CloseIcon from './close-icon'
+import BackArrow from './back-arrow'
 import {logout, me} from '../../store/user'
 
 const MAINMENU = 'MAINMENU'
@@ -84,7 +85,15 @@ class UnconnectedAuthWidget extends Component {
       let expandedAreaAddtlButtons = null
       if (this.state.activeSection !== MAINMENU){
         expandedAreaAddtlButtons = (
-          <button type="button" onClick={this.navigateMain}>Back</button>
+          <button
+            type="button" onClick={this.navigateMain}
+            className="back-button"
+          >
+            <BackArrow
+              viewBox="-2 -2 40 40" outerClass="back-button-icon"
+              triangleClass="back-button-icon__triangle"
+            />
+          </button>
         )
       }
       expandedArea = (

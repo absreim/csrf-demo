@@ -122,3 +122,20 @@ main {
   stroke: red;
   stroke-width: 4px;
 }
+
+.back-button {
+  padding: 0;
+  border: none;
+}
+
+.back-button-icon {
+  width: 1.5em;
+  height: 1.5em;
+  display: block;
+}
+
+.back-button-icon__triangle {
+  stroke: black;
+  stroke-width: 4px;
+  fill: black;
+}
