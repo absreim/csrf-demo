@@ -1,3 +1,13 @@
+button, input[type="submit"] {
+  color: green;
+  border-color: green;
+}
+
+button:hover, input[type="submit"]:hover {
+  color: lightgreen;
+  border-color: lightgreen;
+}
+
 body {
   font-family: sans-serif;
   margin: 0;
@@ -53,6 +63,18 @@ main {
 .auth-widget-dropdown {
   position: absolute;
   right: 0.5em;
+  border: solid;
+  border-color: lightgreen;
+  background-color: white;
+}
+
+.auth-widget-dropdown-message {
+  font-size: smaller;
+}
+
+.auth-widget-dropdown-menu {
+  display: flex;
+  flex-direction: column;
 }
 
 .auth-widget-nav {
@@ -73,7 +95,7 @@ main {
 }
 
 .radio-group {
-  border: solid;
+  border: thin dashed green;
   display: flex;
   flex-direction: column;
 }
@@ -84,18 +106,21 @@ main {
   padding: 0;
 }
 
-.auth-widget-icon-button:hover {
-  border-color: white;
-}
-
 .auth-widget-icon {
   width: 3em;
   height: 3em;
   display: block;
+  stroke: green;
+  fill: green;
+}
+
+.auth-widget-icon:hover{
+  stroke: lightgreen;
+  fill: lightgreen;
 }
 
 .auth-widget-icon__figure {
-  stroke: green;
+  stroke: inherit;
   stroke-width: 4px;
 }
 
@@ -104,7 +129,7 @@ main {
 }
 
 .auth-widget-icon__figure--filled {
-  fill: green;
+  fill: inherit;
 }
 
 .close-button {
@@ -116,10 +141,15 @@ main {
   width: 1.5em;
   height: 1.5em;
   display: block;
+  stroke: darkred;
+}
+
+.close-button-icon:hover {
+  stroke: red;
 }
 
 .close-button-icon-lines {
-  stroke: red;
+  stroke: inherit;
   stroke-width: 4px;
 }
 
@@ -132,10 +162,38 @@ main {
   width: 1.5em;
   height: 1.5em;
   display: block;
+  stroke: black;
+  fill: black;
+}
+
+.back-button-icon:hover {
+  stroke: darkgray;
+  fill: darkgray;
 }
 
 .back-button-icon__triangle {
-  stroke: black;
+  stroke: inherit;
   stroke-width: 4px;
-  fill: black;
+  fill: inherit;
+}
+
+.account-action-switcher {
+  margin-top: 1em;
+  background-color: lightgray;
+}
+
+.account-action-swticher-nav__button--selected {
+  color: lightgreen;
+  border-color: darkgreen;
+  background-color: darkgreen;
+}
+
+.account-action-swticher-nav__button--selected:hover {
+  color: white;
+  border-color: darkgreen;
+  background-color: darkgreen;
+}
+
+.account-balance-container {
+  background-color: lightgray;
 }

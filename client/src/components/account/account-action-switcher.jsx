@@ -45,35 +45,59 @@ class UnconnectedAccountActionSwitcher extends Component {
     }
   }
   render(){
-    let addtlButtons = null
-    if (this.props.user){
-      addtlButtons = (
-        <Fragment>
-          <button type="button" onClick={this.navigateWithdraw}>Withdraw</button>
-          <button type="button" onClick={this.navigateTransfer}>Transfer</button>
-        </Fragment>
-      )
-    }
+
+    let depositButtonClass = null
+    let transferButtonClass = null
+    let withdrawButtonClass = null
 
     let actionFormArea = null
     switch (this.state.selectedAction){
       case DEPOSIT:
         actionFormArea = <AccountDeposit />
+        depositButtonClass = 'account-action-swticher-nav__button--selected'
         break
       case TRANSFER:
         actionFormArea = <AccountTransfer />
+        transferButtonClass = 'account-action-swticher-nav__button--selected'
         break
       case WITHDRAW:
         actionFormArea = <AccountWithdraw />
+        withdrawButtonClass = 'account-action-swticher-nav__button--selected'
         break
       default:
         actionFormArea = <p>Select an action above.</p>
     }
 
+    let addtlButtons = null
+    if (this.props.user){
+      addtlButtons = (
+        <Fragment>
+          <button
+            type="button" onClick={this.navigateWithdraw}
+            className={withdrawButtonClass}
+          >
+            Withdraw
+          </button>
+          <button
+            type="button" onClick={this.navigateTransfer}
+            className={transferButtonClass}
+          >
+            Transfer
+          </button>
+        </Fragment>
+      )
+    }
+
     return (
-      <div>
+      <div className="account-action-switcher">
+        <h2>Actions</h2>
         <nav>
-          <button type="button" onClick={this.navigateDeposit}>Deposit</button>
+          <button
+            type="button" onClick={this.navigateDeposit}
+            className={depositButtonClass}
+          >
+            Deposit
+          </button>
           {addtlButtons}
         </nav>
         {actionFormArea}

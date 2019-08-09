@@ -67,14 +67,19 @@ class UnconnectedAuthWidget extends Component {
                 user ?
                 (
                   <Fragment>
-                    <p>Logged in as:&nbsp;{user.username}</p>
-                    <button type="button" onClick={this.props.logout}>Logout</button>
+                    <p className="auth-widget-dropdown-message">Logged in as:</p>
+                    <p><b>{user.username}</b></p>
+                    <div className="auth-widget-dropdown-menu">
+                      <button type="button" onClick={this.props.logout}>Logout</button>
+                    </div>
                   </Fragment>
                 ) :
                 (
                   <Fragment>
-                    <button type="button" onClick={this.navigateLogin}>Login</button>
-                    <button type="button" onClick={this.navigateSignUp}>Sign up</button>
+                    <div className="auth-widget-dropdown-menu">
+                      <button type="button" onClick={this.navigateLogin}>Login</button>
+                      <button type="button" onClick={this.navigateSignUp}>Sign up</button>
+                    </div>
                   </Fragment>
                 )
               }

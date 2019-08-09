@@ -51,7 +51,12 @@ class UnconnectedSignup extends Component {
         {
           user ?
           <Fragment>
-            <p>You are successfully logged in as&nbsp;<b>{user.username}</b></p>
+            <p
+              className="auth-widget-dropdown-message"
+            >
+              You have signed up as:
+            </p>
+            <p><b>{user.username}</b></p>
             <button type="button" onClick={this.props.dismissForm}>OK</button>
           </Fragment> :
           <Fragment>

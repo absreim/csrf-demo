@@ -24,15 +24,18 @@ class UnconnectedAccount extends Component{
   render(){
     return (
       <main>
-        <h1 className="main-title">Account Actions</h1>
-        {
-          this.props.user ?
-          <Fragment>
-            <p>Balance:&nbsp;{this.props.balance}</p>
-            <button type="button" onClick={this.props.getBalance}>Refresh Balance</button>
-          </Fragment> :
-          <p>You must be logged in to view your balance.</p>
-        }
+        <h1 className="main-title">Your Account</h1>
+        <div className="account-balance-container">
+          <h2>Balance</h2>
+          {
+            this.props.user ?
+            <Fragment>
+              <p>Balance:&nbsp;<b>{this.props.balance}</b></p>
+              <button type="button" onClick={this.props.getBalance}>Refresh Balance</button>
+            </Fragment> :
+            <p>You must be logged in to view your balance.</p>
+          }
+        </div>
         <AccountActionSwitcher />
       </main>
     )
