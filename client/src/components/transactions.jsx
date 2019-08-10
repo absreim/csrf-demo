@@ -61,6 +61,7 @@ class UnconnectedTransactions extends Component{
                 <p>Data has not been loaded from the server.</p>
               }
               <button
+                className="transactions-refresh-button"
                 type="button"
                 onClick={this.props.getTransactions}
               >

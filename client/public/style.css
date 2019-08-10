@@ -1,6 +1,7 @@
 button, input[type="submit"] {
   color: green;
   border-color: green;
+  background-color: white;
 }
 
 button:hover, input[type="submit"]:hover {
@@ -22,6 +23,11 @@ main {
   color: white;
   font-size: larger;
   margin-bottom: 0.5em;
+}
+
+.main-logo {
+  max-width: 25em;
+  max-height: 25em;
 }
 
 .nav-header-auth-container {
@@ -199,5 +205,15 @@ main {
 }
 
 .transactions-table {
-  border: solid;
+  border: thin solid;
+  border-collapse: collapse;
+}
+
+.transactions-table th, .transactions-table td {
+  border: thin solid;
+  padding: .25em;
+}
+
+.transactions-refresh-button {
+  margin-top: 1em;
 }
