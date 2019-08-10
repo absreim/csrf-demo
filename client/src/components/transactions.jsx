@@ -32,7 +32,7 @@ class UnconnectedTransactions extends Component{
               {
                 transactions ?
                 (
-                  <table>
+                  <table className="transactions-table">
                     <thead>
                       <tr>
                         <th>From</th>

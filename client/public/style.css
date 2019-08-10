@@ -197,3 +197,7 @@ main {
 .account-balance-container {
   background-color: lightgray;
 }
+
+.transactions-table {
+  border: solid;
+}
