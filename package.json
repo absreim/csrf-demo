@@ -43,6 +43,6 @@
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.3",
     "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.12"
   }
 }
